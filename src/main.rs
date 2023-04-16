@@ -1,10 +1,21 @@
 #![allow(warnings)]
 
+
 // PACKAGES
 use std::io;
 
-// MODULES
 
+// MODULES
+mod init;
+pub use crate::init::init_md;
+
+mod add;
+pub use crate::add::add_md;
+
+mod del;
+pub use crate::del::del_md;
+
+mod time;
 
 
 fn main()
@@ -24,15 +35,18 @@ fn main()
 	{
 		"init" => {
 		  let db_name = std::env::args().nth(2).expect("error database name");
-		  init_md::start(db_name.to_string());
+		  if db_name == "init" {
+		  	println!("error name");
+		  	return;
+		  }
+
+		  init_md::start(db_name);
 		},
 		"add" => add_md::start(),
-		"delete" => {},
-		"select" => {},
-		"print" => {},
+		"del" => {},
+		"get" => {},
 		"log" => {},
 		"info" => {},
-		"cmd" => {},
 		"exit" => return,
 		_ => {
 			println!("Incorrect command !");
