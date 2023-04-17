@@ -34,13 +34,24 @@ fn main()
 	match first_arg.as_ref()
 	{
 		"init" => {
+			if args.len() < 4 {
+				println!("You haven't written enough arguments.\nShould be 2 -> mox init [database's name] [amount of columns]");
+				return;
+			}
+
 		  let db_name = std::env::args().nth(2).expect("error database name");
 		  if db_name == "init" {
 		  	println!("error name");
 		  	return;
 		  }
 
-		  init_md::start(db_name);
+		  let db_columns = std::env::args().nth(3).expect("error database name").parse::<i64>().unwrap();
+		  if db_columns <= 0 || db_columns >= 11 {
+		  	println!("error number");
+		  	return;
+		  }
+
+		  init_md::start(db_name, db_columns);
 		},
 		"add" => add_md::start(),
 		"del" => {},
