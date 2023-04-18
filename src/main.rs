@@ -53,7 +53,7 @@ fn main()
 
 		  init_md::start(db_name, db_columns);
 		},
-		"add" => add_md::start(),
+		"add" => add_md::start(args),
 		"del" => {},
 		"get" => {},
 		"log" => {},
