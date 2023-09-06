@@ -25,8 +25,22 @@ pub mod init_md
 
     match fs::create_dir("mox")
     {
-			Err(why) => println!("database didn't created: {:?} !", why.kind()),
-			Ok(_) => {
+			Err(why) =>
+			{
+				let mut db_exist: bool = if fs::metadata("mox/init.txt").is_ok() && fs::metadata(DB_NAME_STR).is_ok() { true }
+    		else { false };
+
+    		if db_exist == true
+    			{ println!("database didn't created: {:?} !", why.kind()); }
+    		else {
+    			println!("\n---\nthe mox/init.txt and mox/db_name.txt are missing");
+    			println!("delete the 'mox' folder and initialize the database again !\n---\n");
+    		}
+
+    		return;
+			},
+			Ok(_) =>
+			{
 				fs::File::create(DB_NAME_STR);
 
 				match fs::File::create("mox/init.txt")
