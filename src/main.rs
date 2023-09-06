@@ -39,13 +39,13 @@ fn main()
 				return;
 			}
 
-		  let db_name = std::env::args().nth(2).expect("error database name");
+		  let db_name = std::env::args().nth(2).expect("error: database name");
 		  if db_name == "init" {
 		  	println!("error name");
 		  	return;
 		  }
 
-		  let db_columns = std::env::args().nth(3).expect("error database name").parse::<i64>().unwrap();
+		  let db_columns = std::env::args().nth(3).expect("error: the number of columns in the database").parse::<i64>().unwrap();
 		  if db_columns <= 0 || db_columns >= 11 {
 		  	println!("error number");
 		  	return;
