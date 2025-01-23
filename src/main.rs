@@ -6,6 +6,8 @@ use std::io;
 
 
 // MODULES
+mod time;
+
 mod init;
 pub use crate::init::init_md;
 
@@ -28,22 +30,12 @@ fn main()
 	match first_arg.as_ref()
 	{
 		"init" => {
-			if args.len() < 3 {
-				println!("You haven't written enough arguments.\nShould be 1 -> mox init [settings_file_name.yaml]");
+			if args.len() < 2 {
+				println!("You haven't written enough arguments.\nShould be -> mox init");
 				return;
 			}
 
-      let settings_name = std::env::args().nth(2).expect("[ERROR]: settings name");
-
-		  // START BLACKLIST'S FUNCTION FOR CHECKING
-			/* if blacklist_md::start(&db_name) == true
-			{
-				println!("\n[ERROR]: This name is on the blacklist !");
-				println!("сhoose a different name for the database !\n-------------\n");
-				return;
-			} */
-
-		  init_md::start(settings_name);
+		  init_md::start();
 		},
 		"add" => {},
 		"del" => {},
