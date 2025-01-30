@@ -1,4 +1,4 @@
-pub mod time_fn
+pub mod time_md
 {
 	// PACKAGES
 	use std::process::Command;

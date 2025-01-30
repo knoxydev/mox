@@ -7,6 +7,7 @@ use std::io;
 
 // MODULES
 mod time;
+mod action;
 
 mod init;
 pub use crate::init::init_md;

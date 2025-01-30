@@ -16,7 +16,7 @@ pub mod init_md
   }
 
 
-  fn create_block(db_config: Config) -> Result<(), Box<dyn std::error::Error>>
+  fn create_block(db_config: &Config) -> Result<(), Box<dyn std::error::Error>>
   {
     let db_name: String = format!("mox/{}.txt", db_config.db_name);
     let file = fs::File::create(&db_name)?;
@@ -30,7 +30,7 @@ pub mod init_md
         match fs::File::create(&new_block_path)
         {
           Ok(_) => {
-            let time: [String; 2] = crate::time::time_fn::start();
+            let time: [String; 2] = crate::time::time_md::start();
             let line: String = format!("1|||{}|||{}\n", time[1], time[0]);
 
             let mut file = fs::File::create(db_name)?;
@@ -78,8 +78,13 @@ pub mod init_md
 
         if config.db_name.len() == 0 && config.columns.len() == 0
           { println!("[ERROR]: Fill in the configuration file (mox/config.yaml) with information about your database."); }
-        else
-          { create_block(config); }
+        else  {
+          // START CREATING FIRST BLOCK
+          create_block(&config);
+
+          // START CREATING mox/actions/ FOLDER
+          crate::action::action_md::start(config.columns);
+        }
       }
       else {
         let config = Config {
