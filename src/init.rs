@@ -78,7 +78,14 @@ pub mod init_md
 
         if config.db_name.len() == 0 && config.columns.len() == 0
           { println!("[ERROR]: Fill in the configuration file (mox/config.yaml) with information about your database."); }
-        else  {
+        else
+        {
+          // START CHECKING DB-NAME FOR NAMES BLACKLIST
+          if crate::blacklist::blacklist_md::start(&config.db_name) == true {
+            println!("[ERROR]: You cannot use this name for the database! It is on the blacklist.");
+            std::process::exit(0);
+          }
+
           // START CREATING FIRST BLOCK
           create_block(&config);
 
@@ -101,27 +108,6 @@ pub mod init_md
 
     Ok(())
   }
-
-
-  /* pub fn start(settings_filename: String) -> Result<(), Box<dyn std::error::Error>>
-  {
-    if check_folder() == true
-    {
-      let full_settings_filename: String = "mox/".to_owned() + &settings_filename;
-
-      if Path::new(&full_settings_filename).exists()
-      {
-        let yaml_content = fs::read_to_string(full_settings_filename)?;
-        let config: Config = serde_yaml::from_str(&yaml_content)?;
-
-        println!("{:?}", config);
-      }
-      else { println!("[ERROR]: File '{}' doesn't exist.", full_settings_filename); }
-    }
-    else {  println!("[ERROR]: Failed to create main folder."); }
-
-    Ok(())
-  } */
 }
 
 
